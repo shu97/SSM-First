@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+            "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chason.ssm.dao.UserDao">
+    <!--查看所有用户-->
+    <select id="selectAllUser" resultType="com.chason.ssm.bean.User">
+      SELECT * FROM work.user
+    </select>
+    <!--校验用户-->
+    <select id="isUser" resultType="com.chason.ssm.bean.User">
+      SELECT user.name,user.password FROM user
+      <where>
+          name=#{name} and password =#{password}
+      </where>
+    </select>
+    <!--根据用户ID，查找用户-->
+    <select id="findById" resultType="com.chason.ssm.bean.User">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+    <!--修改密码-->
+    <update id="updatePassword">
+      UPDATE user
+      <set>
+       <!-- <if test="((password!=null||password!='')and(nowPassword!=null||nowPassword!=''))">-->
+          password=#{password}
+          <where>
+            password=#{nowPassword}
+          </where>
+    <!--</if>-->
+    </set>
+    </update>
+    <!--新增用户-->
+    <insert id="save" parameterType="com.chason.ssm.bean.User">
+        INSERT user(name,password) VALUES (#{name},#{password})
+    </insert>
+    <!--删除用户-->
+    <delete id="remove">
+        DELETE FROM user where id=#{id}
+    </delete>
+</mapper>
